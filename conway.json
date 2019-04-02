@@ -1,5 +1,5 @@
 {
-    "length" : 80,
-    "breadth" : 160,
-    "random_seed" : 689 
+    "len_grid" : 80,
+    "br_grid" : 160,
+    "rnd_seed" : 689 
 }

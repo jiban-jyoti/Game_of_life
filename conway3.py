@@ -8,9 +8,9 @@ import json
 with open('conway.json') as json_file:
     data = json.load(json_file)
     #print(data['length'])
-    m = (data['length'])
-    n = (data['breadth'])
-    seed = (data['random_seed'])
+    p = (data['len_grid'])
+    q = (data['br_grid'])
+    seed = (data['rnd_seed'])
 np.random.seed(seed)
 
 def conway(state, k=None):
@@ -18,35 +18,35 @@ def conway(state, k=None):
     Conway's game of life state transition
     """
 
-    # set up kernel if not given
+    # setting kernel if not given
     if k == None:
-        m, n = state.shape
-        k_arr = np.zeros((m, n))
-        k_arr[m//2-1 : m//2+2, n//2-1 : n//2+2] = np.array([[1,1,1],[1,0,1],[1,1,1]])
+        p, q = state.shape
+        k_arr = np.zeros((p, q))
+        k_arr[p//2-1 : p//2+2, q//2-1 : q//2+2] = np.array([[1,1,1],[1,0,1],[1,1,1]])
 
-    # computes sums around each pixel
-    b = fft_convolve2d(state,k_arr).round()
-    c = np.zeros(b.shape)
+    # computes sum around  pixel using fft algo
+    p = fft_convolve2d(state,k_arr).round()
+    s = np.zeros(p.shape)
 
-    c[np.where((b == 2) & (state == 1))] = 1
-    c[np.where((b == 3) & (state == 1))] = 1
+    s[np.where((p == 2) & (state == 1))] = 1
+    s[np.where((p == 3) & (state == 1))] = 1
 
-    c[np.where((b == 3) & (state == 0))] = 1
+    s[np.where((p == 3) & (state == 0))] = 1
 
     # return new state
-    return c
+    return s
 
 
 
 
 #m,n = 100,100
-A = np.random.random(m*n).reshape(m, n).round()
+A = np.random.random(p*q).reshape(p, q).round()
 
 ims = []
 fig = plt.figure()
 
 for i in range(0,400):
-    img_plot = plt.imshow(A, interpolation="nearest", cmap = plt.cm.gray, animated=True)
+    image_plot = plt.imshow(A, interpolation="nearest", cmap = plt.cm.gray, animated=True)
     A = conway(A)
     im = plt.imshow(A)
     ims.append([im])
